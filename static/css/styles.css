@@ -11,3 +11,33 @@
     font-style: normal;
 }
 
+
+/*---------- Colours ----------*/
+
+.color-gold {
+    color: #FFD700;
+}
+
+
+
+/*---------- Main Styles ----------*/
+
+h1#star-wars-logo {
+    font-family: 'Star Jedi', sans-serif;
+}
+
+img#stormtrooper {
+    opacity: 0.5;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: calc(100% - 110px);
+    margin-right: -100px;
+    margin-top: 110px;
+    
+}
+
+img.bullet-point {
+    display: block;
+    width: 50px;
+}
