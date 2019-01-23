@@ -1,4 +1,4 @@
-const endPoints = ['films', 'people', 'planets', 'species', 'starships', 'vehicles'];
+const endPoints = ['films', 'people', 'planets', 'starships', 'species', 'vehicles'];
 
 const apiURL = 'https://swapi.co/api/';
 
@@ -7,6 +7,11 @@ allData.counts = {};
 
 for (let i = 0; i < endPoints.length; i++) {
     getData(apiURL, endPoints[i]);
+    $(`#${endPoints[i]}-meter`).html(
+        `<div class="loader">
+            <img src="assets/loader/loader.gif" alt="loading..."/>
+        </div>`
+    );
 }
 
 function getData(url, endpoint, linked = false) {
@@ -54,5 +59,26 @@ function makeGraphs() {
     console.log('All data has been retrieved!');
     console.log(allData); // for testing
     
+    makeMeters();
     
+    
+    
+}
+
+function makeMeters() {
+    for (let i = 0; i < endPoints.length; i++) {
+        let number = new CountUp(`${endPoints[i]}-meter`, 0, allData.counts[endPoints[i]]);
+        if (!number.error) {
+            number.start();
+        } else {
+            console.error(number.error);
+        }
+    }
+
+    // var numAnim = new CountUp('films-meter', 0, allData.counts.films);
+    // if (!numAnim.error) {
+    //     numAnim.start();
+    // } else {
+    //     console.error(numAnim.error);
+    // }
 }
