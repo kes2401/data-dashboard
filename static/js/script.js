@@ -2,8 +2,8 @@ const endPoints = ['films', 'people', 'planets', 'starships', 'species', 'vehicl
 
 const apiURL = 'https://swapi.co/api/';
 
-let allData = {};
-allData.counts = {};
+let allData = [];
+let dataCounts = {};
 
 for (let i = 0; i < endPoints.length; i++) {
     getData(apiURL, endPoints[i]);
@@ -18,47 +18,54 @@ function getData(url, endpoint, linked = false) {
     if (linked) {
         $.getJSON(url, function(data) {
             for (let i = 0; i < data.results.length; i++){
-                allData[endpoint].push(data.results[i]);
+                data.results[i].category = endpoint;
+                allData.push(data.results[i]);
             }
+            
             checkData();
+            
             if (data.next) {
                 getData(data.next, endpoint, true);
             }
         })
     } else {
         $.getJSON(`${url}${endpoint}`, function(data) {
-            allData.counts[endpoint] = data.count;
-            
-            if (allData[endpoint]) {
-                for (let i = 0; i < data.results.length; i++){
-                    allData[endpoint].push(data.results[i]);
-                }
-                checkData();
-            } else {
-                allData[endpoint] = data.results;
-                checkData();
+            dataCounts[endpoint] = data.count;
+
+            for (let i = 0; i < data.results.length; i++){
+                data.results[i].category = endpoint;
+                allData.push(data.results[i]);
             }
             
             if (data.next) {
                 getData(data.next, endpoint, true);
+            } else {
+                checkData();
             }
         });
     }
 }
 
 function checkData() {
+    let totalCount = 0;
+    
     for (let i = 0; i < endPoints.length; i++) {
-        if (allData[endPoints[i]] && allData[endPoints[i]].length !== allData.counts[endPoints[i]]) {
-            return;
-        };
+        totalCount += dataCounts[endPoints[i]];    
     }
-    makeGraphs();
+    
+    console.log('data checked!'); // for testing
+    
+    if (allData.length === totalCount) {
+        makeGraphs();        
+    }
 }
 
 function makeGraphs() {
     console.log('All data has been retrieved!');
+    console.log('All Data:') // for testing
     console.log(allData); // for testing
-    
+    console.log('Data Counts:') // for testing
+    console.log(dataCounts); // for testing
     makeMeters();
     
     
@@ -67,18 +74,11 @@ function makeGraphs() {
 
 function makeMeters() {
     for (let i = 0; i < endPoints.length; i++) {
-        let number = new CountUp(`${endPoints[i]}-meter`, 0, allData.counts[endPoints[i]]);
+        let number = new CountUp(`${endPoints[i]}-meter`, 0, dataCounts[endPoints[i]]);
         if (!number.error) {
             number.start();
         } else {
             console.error(number.error);
         }
     }
-
-    // var numAnim = new CountUp('films-meter', 0, allData.counts.films);
-    // if (!numAnim.error) {
-    //     numAnim.start();
-    // } else {
-    //     console.error(numAnim.error);
-    // }
 }
