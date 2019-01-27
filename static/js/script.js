@@ -22,10 +22,10 @@ function getData(url, endpoint, linked = false) {
                 allData.push(data.results[i]);
             }
             
-            checkData();
-            
             if (data.next) {
                 getData(data.next, endpoint, true);
+            } else {
+                checkData();
             }
         })
     } else {
@@ -68,8 +68,16 @@ function makeGraphs() {
     console.log(dataCounts); // for testing
     makeMeters();
     
+    const ndx = crossfilter(allData);
+    console.log(ndx);
+    
+    makePieChart(ndx); // Test chart function
+    makeBarChart(ndx); // Test chart function
+    
+    makeRowChart(ndx); // Test chart function
     
     
+    humanNonHumanChart(ndx);
 }
 
 function makeMeters() {
@@ -81,4 +89,117 @@ function makeMeters() {
             console.error(number.error);
         }
     }
+}
+
+
+function makePieChart(ndx) {
+    let pieChart = dc.pieChart('#pie-chart');
+
+    let nameDim = ndx.dimension(dc.pluck('category'));
+    
+    let nameGroup = nameDim.group();
+
+    pieChart
+        .width(400)
+        .height(400)
+        .slicesCap(6)
+        .innerRadius(100)
+        .dimension(nameDim)
+        .group(nameGroup)
+        .legend(dc.legend())
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
+            });
+        });
+    
+    pieChart.render();
+
+}
+
+function makeBarChart(ndx) {
+    
+    let barChart = dc.barChart('#bar-chart');
+    
+    let dim = ndx.dimension(dc.pluck('category'));
+    
+    let group = dim.group();
+    
+    barChart
+        .width(400)
+        .height(400)
+        .margins({top: 10, right: 50, bottom: 30, left: 50})
+        .dimension(dim)
+        .group(group)
+        .transitionDuration(500)
+        .x(d3.scaleBand())
+        .xUnits(dc.units.ordinal)
+        .xAxisLabel('Categories')
+        .yAxis().ticks(10);
+    
+    barChart.render()
+}
+
+function makeRowChart(ndx) {
+    // let rowChart = dc.rowChart('#row-chart');
+    
+    // let categoryDim = ndx.dimension(dc.pluck('category'));
+    
+    // let peopleFilter = categoryDim.filter(function(d) {return d.category === 'people'});
+    
+    // let filmGroup = peopleFilter.group(function(d){return d.films});
+    
+    // rowChart
+    //     .width(768)
+    //     .height(450)
+    //     .x(d3.scaleLinear().domain([0, endPoints.length]))
+    //     .dimension(peopleFilter)
+    //     .group(filmGroup)
+    //     .render()
+}
+
+function humanNonHumanChart(ndx) {
+    let humanChart = dc.pieChart('#human-non-human-chart');
+    
+    let categoryDim = ndx.dimension(function(d) {
+        if (d.category === 'people' && d.species[0] === 'https://swapi.co/api/species/1/') {
+            return 'Human';
+        } else if (d.category === 'people' && d.species[0] !== 'https://swapi.co/api/species/1/') {
+            return 'Non-Human';
+        } else {
+            return 'not-people';
+        }
+    });
+    
+    let peopleGroup = categoryDim.group();
+    
+    let filteredGroup = removeNonPeople(peopleGroup);
+    
+    // function to create fake group
+    function removeNonPeople(source_group) {
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    return d.key !== 'not-people';
+                });
+            }
+        };
+    }
+    
+    humanChart
+        .height(400)
+        .width(400)
+        .innerRadius(60)
+        .slicesCap(2)
+        .transitionDuration(500)
+        .dimension(categoryDim)
+        .group(filteredGroup)
+        .legend(dc.legend())
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
+            });
+        });
+    
+    humanChart.render();
 }
