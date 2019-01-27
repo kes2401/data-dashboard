@@ -73,11 +73,12 @@ function makeGraphs() {
     
     makePieChart(ndx); // Test chart function
     makeBarChart(ndx); // Test chart function
-    
     makeRowChart(ndx); // Test chart function
     
     
     humanNonHumanChart(ndx);
+    wheeledNonWheeledChart(ndx);
+    // largestPlanetsChart(ndx);
 }
 
 function makeMeters() {
@@ -189,8 +190,7 @@ function humanNonHumanChart(ndx) {
     humanChart
         .height(400)
         .width(400)
-        .innerRadius(60)
-        .slicesCap(2)
+        .innerRadius(80)
         .transitionDuration(500)
         .dimension(categoryDim)
         .group(filteredGroup)
@@ -203,3 +203,80 @@ function humanNonHumanChart(ndx) {
     
     humanChart.render();
 }
+
+function wheeledNonWheeledChart(ndx) {
+    
+    let wheeledChart = dc.pieChart('#wheeled-non-wheeled-chart');
+    
+    let vehCategoryDim = ndx.dimension(function(d) {
+        if (d.category === 'vehicles' && d.vehicle_class === 'wheeled') {
+            return 'Wheeled';
+        } else if (d.category === 'vehicles' && d.vehicle_class !== 'wheeled') {
+            return 'Non-Wheeled';
+        } else {
+            return 'n/a';
+        }
+    });
+    
+    let vehiclesGroup = vehCategoryDim.group();
+    
+    let filterVehiclesGroup = removeNonVehicles(vehiclesGroup);
+    
+    console.log(filterVehiclesGroup.all()); // for testing
+    
+    // function to create fake group
+    function removeNonVehicles(source_group) {
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    return d.key !== 'n/a';
+                });
+            }
+        };
+    }
+    
+    wheeledChart
+        .height(400)
+        .width(400)
+        .innerRadius(80)
+        .transitionDuration(500)
+        .dimension(vehCategoryDim)
+        .group(filterVehiclesGroup)
+        .legend(dc.legend())
+        .on('pretransition', function(chart) {
+            chart.selectAll('text.pie-slice').text(function(d) {
+                return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
+            });
+        });
+    
+    wheeledChart.render();
+}
+
+// function largestPlanetsChart(ndx) {
+//     let planetsChart = dc.rowChart('#largest-planets-chart');
+    
+//     let categoryDim = ndx.dimension(dc.pluck('diameter'));
+    
+//     let categoryGroup = categoryDim.group();
+    
+//     console.log(categoryGroup.top(15)); // for testing
+    
+//     let filteredGroup = removeNonPlanets(categoryGroup);
+    
+//     // function to create fake group
+//     function removeNonPlanets(source_group) {
+//         return {
+//             all:function () {
+//                 return source_group.all().filter(function(d) {
+//                     return d.key === 'planets';
+//                 });
+//             }
+//         };
+//     }
+    
+    
+//     console.log(filteredGroup.all()); // for testing
+    
+    
+    
+// }
