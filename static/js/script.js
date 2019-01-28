@@ -79,6 +79,7 @@ function makeGraphs() {
     humanNonHumanChart(ndx);
     wheeledNonWheeledChart(ndx);
     largestPlanetsChart(ndx);
+    mostUsedStarshipsChart(ndx);
 }
 
 function makeMeters() {
@@ -277,11 +278,64 @@ function largestPlanetsChart(ndx) {
         .height(360)
         .x(d3.scaleOrdinal())
         .elasticX(true)
+        .transitionDuration(500)
         .dimension(nameDim)
         .group(filteredGroup)
         .labelOffsetX(5);
     
     planetsChart.render();
+}
 
+function mostUsedStarshipsChart(ndx) {
+    let starshipsChart = dc.rowChart('#most-used-starships-chart');
     
+    let nameStarshipsDim = ndx.dimension(dc.pluck('name'));
+    
+    let filmsPerFact = nameStarshipsDim.group().reduce(
+        function(p, v) {
+            p.count++;
+            if (Array.isArray(v.films)) {
+                p.films += v.films.length
+            };
+            p.category = v.category;
+            return p;
+        },
+        function(p, v) {
+            return;
+        },  
+        function(p, v) {
+            return { count: 0, category: '', films: 0 };
+        }
+    );
+
+    console.log(filmsPerFact.all()); // for testing
+    
+    let filteredStarshipsGroup = removeNonStarshipsSortTopFifteen(filmsPerFact);
+    
+    console.log(filteredStarshipsGroup.all()); // for testing
+
+    // function to create fake group
+    function removeNonStarshipsSortTopFifteen(source_group) {
+        return {
+            all: function (d) {
+                return source_group.all().filter(function(d){ return d.value.category === 'starships';}).sort((a, b) => (a.value.films < b.value.films) ? 1 : -1).slice(0, 15);
+            }
+        };
+    }
+    
+    starshipsChart
+        .width(560)
+        .height(360)
+        .x(d3.scaleOrdinal())
+        .elasticX(true)
+        .transitionDuration(500)
+        .dimension(nameStarshipsDim)
+        .group(filteredStarshipsGroup)
+        .valueAccessor(function(d) {
+            return d.value.films;
+        })
+        .labelOffsetX(5)
+        .xAxis().tickValues([0, 1, 2, 3, 4])
+    
+    starshipsChart.render();
 }
