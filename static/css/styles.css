@@ -44,11 +44,11 @@ img.bullet-point {
 
 
 
-#most-appearing-characters-chart .x.axis text {
+#most-appearing-characters-chart .x.axis text,
+#speed-by-starship-chart .x.axis text {
     text-anchor: end !important;
     transform: rotate(-45deg);
 }
-
 
 /*---------- Text Utilities ----------*/
 

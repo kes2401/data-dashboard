@@ -81,6 +81,7 @@ function makeGraphs() {
     largestPlanetsChart(ndx);
     mostUsedStarshipsChart(ndx);
     mostAppearancesByCharachterChart(ndx);
+    speedByStarshipsChart(ndx);
 }
 
 function makeMeters() {
@@ -303,7 +304,7 @@ function mostUsedStarshipsChart(ndx) {
         },
         function(p, v) {
             p.count = 0;
-            p.category = 0;
+            p.category = '';
             p.films = 0;
             return p;
         },  
@@ -334,7 +335,7 @@ function mostUsedStarshipsChart(ndx) {
     }
     
     starshipsChart
-        .width(560)
+        .width(720)
         .height(360)
         .x(d3.scaleOrdinal())
         .elasticX(true)
@@ -370,7 +371,7 @@ function mostAppearancesByCharachterChart(ndx) {
         },
         function(p, v) {
             p.count = 0;
-            p.category = 0;
+            p.category = '';
             p.films = 0;
             return p;
         },  
@@ -416,3 +417,69 @@ function mostAppearancesByCharachterChart(ndx) {
     
     characterAppearancesChart.render()
 }
+
+function speedByStarshipsChart(ndx) {
+    
+    let starshipSpeedChart = dc.barChart('#speed-by-starship-chart');
+    
+    let nameStarshipDim = ndx.dimension(dc.pluck('name'));
+    
+    console.log(nameStarshipDim.group().all()); // for testing
+    
+    let starshipsPerFact = nameStarshipDim.group().reduce(
+        function(p, v) {
+            p.count = 1;
+            if (v.name === 'Y-wing') {
+                p.max_atmosphering_speed = parseInt(v.max_atmosphering_speed.substring(0, v.max_atmosphering_speed.length - 2)); // data from API has "km" at end of number
+            } else {
+                p.max_atmosphering_speed = parseInt(v.max_atmosphering_speed);
+            }
+            p.category = v.category;
+            return p;
+        },
+        function(p, v) {
+            p.count = 0;
+            p.category = '';
+            p.max_atmosphering_speed = 0;
+            return p;
+        },  
+        function(p, v) {
+            return { count: 0, category: '', max_atmosphering_speed: 0 };
+        }
+    );
+
+    console.log(starshipsPerFact.all()); // for testing
+    
+    let filteredStarshipsGroup = removeNonStarships(starshipsPerFact);
+    
+    console.log(filteredStarshipsGroup.all()); // for testing
+
+    // function to create fake group
+    function removeNonStarships(source_group) {
+        return {
+            all: function (d) {
+                return source_group.all().filter(function(d){ 
+                    return d.value.category === 'starships' && !isNaN(d.value.max_atmosphering_speed) ;
+                });
+            }
+        };
+    }
+
+    starshipSpeedChart
+        .width(720)
+        .height(480)
+        .margins({top: 10, right: 50, bottom: 30, left: 50})
+        .dimension(nameStarshipDim)
+        .group(filteredStarshipsGroup)
+        .valueAccessor(function(d) {
+            return d.value.max_atmosphering_speed;
+        })
+        .transitionDuration(500)
+        .x(d3.scaleBand())
+        .xUnits(dc.units.ordinal)
+        .xAxisPadding(100)
+        .yAxis().ticks(12);
+    
+    starshipSpeedChart.render()
+}
+
