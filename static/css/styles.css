@@ -43,6 +43,13 @@ img.bullet-point {
 }
 
 
+
+#most-appearing-characters-chart .x.axis text {
+    text-anchor: end !important;
+    transform: rotate(-45deg);
+}
+
+
 /*---------- Text Utilities ----------*/
 
 /*.larger-text {*/

@@ -71,15 +71,16 @@ function makeGraphs() {
     const ndx = crossfilter(allData);
     console.log(ndx);
     
-    makePieChart(ndx); // Test chart function
-    makeBarChart(ndx); // Test chart function
-    makeRowChart(ndx); // Test chart function
+    //makePieChart(ndx); // Test chart function
+    //makeBarChart(ndx); // Test chart function
+    //makeRowChart(ndx); // Test chart function
     
     
     humanNonHumanChart(ndx);
     wheeledNonWheeledChart(ndx);
     largestPlanetsChart(ndx);
     mostUsedStarshipsChart(ndx);
+    mostAppearancesByCharachterChart(ndx);
 }
 
 function makeMeters() {
@@ -293,19 +294,17 @@ function mostUsedStarshipsChart(ndx) {
     
     let filmsPerFact = nameStarshipsDim.group().reduce(
         function(p, v) {
-            p.count++;
+            p.count = 1;
             if (Array.isArray(v.films)) {
-                p.films += v.films.length
+                p.films = v.films.length
             };
             p.category = v.category;
             return p;
         },
         function(p, v) {
-            p.count--;
-            if (p.count === 0) {
-                p.category = '';
-                p.films = 0;
-            }
+            p.count = 0;
+            p.category = 0;
+            p.films = 0;
             return p;
         },  
         function(p, v) {
@@ -345,7 +344,75 @@ function mostUsedStarshipsChart(ndx) {
         .valueAccessor(function(d) {
             return d.value.films;
         })
-        .labelOffsetX(5);
+        .labelOffsetX(5)
+        .xAxis().tickFormat(d3.format(",.0f")).tickValues([0, 1, 2, 3, 4]);
     
     starshipsChart.render();
+}
+
+
+function mostAppearancesByCharachterChart(ndx) {
+    
+    let characterAppearancesChart = dc.barChart('#most-appearing-characters-chart');
+    
+    let nameCharacterDim = ndx.dimension(dc.pluck('name'));
+    
+    console.log(nameCharacterDim.group().all()); // for testing
+    
+    let charactersPerFact = nameCharacterDim.group().reduce(
+        function(p, v) {
+            p.count = 1;
+            if (Array.isArray(v.films)) {
+                p.films = v.films.length
+            };
+            p.category = v.category;
+            return p;
+        },
+        function(p, v) {
+            p.count = 0;
+            p.category = 0;
+            p.films = 0;
+            return p;
+        },  
+        function(p, v) {
+            return { count: 0, category: '', films: 0 };
+        }
+    );
+
+    console.log(charactersPerFact.all()); // for testing
+    
+    let filteredCharactersGroup = removeNonCharactersSortTopFifteen(charactersPerFact);
+    
+    console.log(filteredCharactersGroup.all()); // for testing
+
+    // function to create fake group
+    function removeNonCharactersSortTopFifteen(source_group) {
+        return {
+            all: function (d) {
+                return source_group.all().filter(function(d){ 
+                    if (typeof(d.value) === 'object') {
+                        return d.value.category === 'people';
+                    } else {
+                        return 0;
+                    }
+                }).sort((a, b) => (a.value.films < b.value.films) ? 1 : -1).slice(0, 15);
+            }
+        };
+    }
+
+    characterAppearancesChart
+        .width(720)
+        .height(360)
+        .margins({top: 10, right: 50, bottom: 30, left: 50})
+        .dimension(nameCharacterDim)
+        .group(filteredCharactersGroup)
+        .valueAccessor(function(d) {
+            return d.value.films;
+        })
+        .transitionDuration(500)
+        .x(d3.scaleBand())
+        .xUnits(dc.units.ordinal)
+        .yAxis().ticks(8);
+    
+    characterAppearancesChart.render()
 }
