@@ -301,7 +301,12 @@ function mostUsedStarshipsChart(ndx) {
             return p;
         },
         function(p, v) {
-            return;
+            p.count--;
+            if (p.count === 0) {
+                p.category = '';
+                p.films = 0;
+            }
+            return p;
         },  
         function(p, v) {
             return { count: 0, category: '', films: 0 };
@@ -312,13 +317,19 @@ function mostUsedStarshipsChart(ndx) {
     
     let filteredStarshipsGroup = removeNonStarshipsSortTopFifteen(filmsPerFact);
     
-    console.log(filteredStarshipsGroup.all()); // for testing
+    // console.log(filteredStarshipsGroup.all()); // for testing
 
     // function to create fake group
     function removeNonStarshipsSortTopFifteen(source_group) {
         return {
             all: function (d) {
-                return source_group.all().filter(function(d){ return d.value.category === 'starships';}).sort((a, b) => (a.value.films < b.value.films) ? 1 : -1).slice(0, 15);
+                return source_group.all().filter(function(d){ 
+                    if (typeof(d.value) === 'object') {
+                        return d.value.category === 'starships';
+                    } else {
+                        return 0;
+                    }
+                }).sort((a, b) => (a.value.films < b.value.films) ? 1 : -1).slice(0, 15);
             }
         };
     }
@@ -334,8 +345,7 @@ function mostUsedStarshipsChart(ndx) {
         .valueAccessor(function(d) {
             return d.value.films;
         })
-        .labelOffsetX(5)
-        .xAxis().tickValues([0, 1, 2, 3, 4])
+        .labelOffsetX(5);
     
     starshipsChart.render();
 }
