@@ -82,6 +82,7 @@ function makeGraphs() {
     mostUsedStarshipsChart(ndx);
     mostAppearancesByCharachterChart(ndx);
     speedByStarshipsChart(ndx);
+    tallestCharactersChart(ndx);
 }
 
 function makeMeters() {
@@ -413,6 +414,7 @@ function mostAppearancesByCharachterChart(ndx) {
         .transitionDuration(500)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
+        .xAxisLabel('', 64)
         .yAxis().ticks(8);
     
     characterAppearancesChart.render()
@@ -477,9 +479,49 @@ function speedByStarshipsChart(ndx) {
         .transitionDuration(500)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
+        .xAxisLabel('', 100)
         .xAxisPadding(100)
         .yAxis().ticks(12);
     
     starshipSpeedChart.render()
 }
 
+function tallestCharactersChart(ndx) {
+    
+    let tallestCharactersChart = dc.lineChart('#tallest-characters-chart');
+    
+    let charactersDim = ndx.dimension(dc.pluck('name'));
+    
+    console.log(charactersDim); // for testing
+    
+    let heightPerCharacter = charactersDim.group().reduceSum(dc.pluck('height'));
+    
+    console.log(heightPerCharacter.all()); // for testing
+    
+    let filteredCharactersGroup = removeNonCharacters(heightPerCharacter);
+    
+    console.log(filteredCharactersGroup.all()); // for testing
+
+    // function to create fake group
+    function removeNonCharacters(source_group) {
+        return {
+            all: function (d) {
+                return source_group.all().filter(function(d){return !Number.isNaN(d.value)});
+            }
+        };
+    }
+    
+    tallestCharactersChart
+        .width(940)
+        .height(480)
+        .x(d3.scaleBand())
+        .xUnits(dc.units.ordinal)
+        .brushOn(false)
+        .xyTipsOn(true)
+        .xAxisLabel('', 64)
+        .dimension(charactersDim)
+        .group(filteredCharactersGroup);
+    
+    tallestCharactersChart.render();
+    
+}
