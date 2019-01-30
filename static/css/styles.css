@@ -46,7 +46,8 @@ img.bullet-point {
 
 #most-appearing-characters-chart .x.axis text,
 #speed-by-starship-chart .x.axis text,
-#tallest-characters-chart .x.axis .tick text {
+#tallest-characters-chart .x.axis .tick text,
+#crew-capacity-chart .x.axis .tick text {
     text-anchor: end !important;
     transform: rotate(-45deg);
 }

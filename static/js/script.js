@@ -83,6 +83,7 @@ function makeGraphs() {
     mostAppearancesByCharachterChart(ndx);
     speedByStarshipsChart(ndx);
     tallestCharactersChart(ndx);
+    crewCapacityChart(ndx);
 }
 
 function makeMeters() {
@@ -512,16 +513,84 @@ function tallestCharactersChart(ndx) {
     }
     
     tallestCharactersChart
-        .width(940)
+        .width(1200)
         .height(480)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
+        .transitionDuration(500)
         .brushOn(false)
         .xyTipsOn(true)
-        .xAxisLabel('', 64)
+        .xAxisLabel('', 86)
         .dimension(charactersDim)
         .group(filteredCharactersGroup);
     
     tallestCharactersChart.render();
     
+}
+
+
+function crewCapacityChart(ndx) {
+    
+    let crewCapacityChart = dc.lineChart('#crew-capacity-chart');
+    
+    let crewDim = ndx.dimension(dc.pluck('name'));
+    
+    console.log(crewDim); // for testing
+    
+    
+    
+    let vehiclesPerFact = crewDim.group().reduce(
+        function(p, v) {
+            p.count = 1;
+            p.category = v.category;
+            p.crew = parseInt(v.crew);
+            return p;
+        },
+        function(p, v) {
+            p.count = 0;
+            p.category = '';
+            p.crew = 0;
+            return p;
+        },  
+        function(p, v) {
+            return { count: 0, category: '', crew: 0 };
+        }
+    );
+    
+    
+    
+    // let cargoCapacityPerVehicle = cargoDim.group().reduceSum(dc.pluck('cargo_capacity'));
+    
+    console.log(vehiclesPerFact.all()); // for testing
+    
+    let filteredVehiclesGroup = removeNonVehicles(vehiclesPerFact);
+    
+    console.log(filteredVehiclesGroup.all()); // for testing
+
+    // function to create fake group
+    function removeNonVehicles(source_group) {
+        return {
+            all: function (d) {
+                return source_group.all().filter(function(d){return d.value.category === 'vehicles' && !Number.isNaN(d.value.crew)});
+            }
+        };
+    }
+    
+    crewCapacityChart
+        .width(920)
+        .height(640)
+        .x(d3.scaleBand())
+        .xUnits(dc.units.ordinal)
+        .transitionDuration(500)
+        .brushOn(false)
+        .xyTipsOn(true)
+        .xAxisLabel('', 96)
+        .yAxisLabel('', 72)
+        .valueAccessor(function(d) {
+            return d.value.crew;
+        })
+        .dimension(crewDim)
+        .group(filteredVehiclesGroup);
+    
+    crewCapacityChart.render();
 }
