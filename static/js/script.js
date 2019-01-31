@@ -117,9 +117,9 @@ function humanNonHumanChart(ndx) {
     let humanChart = dc.pieChart('#human-non-human-chart');
     
     humanChart
-        .height(400)
-        .width(400)
-        .innerRadius(80)
+        .height(360)
+        .width(360)
+        .innerRadius(40)
         .transitionDuration(500)
         .dimension(categoryDim)
         .group(filteredGroup)
@@ -199,7 +199,7 @@ function largestPlanetsChart(ndx) {
     let planetsChart = dc.rowChart('#largest-planets-chart');
     
     planetsChart
-        .width(740)
+        .width(680)
         .height(360)
         .x(d3.scaleOrdinal())
         .elasticX(true)
@@ -255,7 +255,7 @@ function mostUsedStarshipsChart(ndx) {
     let starshipsChart = dc.rowChart('#most-used-starships-chart');
     
     starshipsChart
-        .width(720)
+        .width(640)
         .height(360)
         .x(d3.scaleOrdinal())
         .elasticX(true)
@@ -315,7 +315,7 @@ function mostAppearancesByCharachterChart(ndx) {
     let characterAppearancesChart = dc.barChart('#most-appearing-characters-chart');
 
     characterAppearancesChart
-        .width(720)
+        .width(640)
         .height(360)
         .margins({top: 10, right: 50, bottom: 30, left: 50})
         .dimension(nameCharacterDim)
@@ -375,7 +375,7 @@ function speedByStarshipsChart(ndx) {
     
     starshipSpeedChart
         .width(720)
-        .height(480)
+        .height(440)
         .margins({top: 10, right: 50, bottom: 30, left: 50})
         .dimension(nameStarshipDim)
         .group(filteredStarshipsGroup)
@@ -413,7 +413,7 @@ function tallestCharactersChart(ndx) {
     
     tallestCharactersChart
         .width(1200)
-        .height(480)
+        .height(440)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
         .transitionDuration(500)
@@ -464,7 +464,7 @@ function crewCapacityChart(ndx) {
     
     crewCapacityChart
         .width(920)
-        .height(640)
+        .height(480)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
         .transitionDuration(500)

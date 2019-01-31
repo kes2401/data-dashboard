@@ -42,7 +42,9 @@ img.bullet-point {
     width: 50px;
 }
 
-
+svg {
+    margin: 0 auto;
+}
 
 #most-appearing-characters-chart .x.axis text,
 #speed-by-starship-chart .x.axis text,
@@ -54,6 +56,13 @@ img.bullet-point {
 
 /*---------- Text Utilities ----------*/
 
-/*.larger-text {*/
-/*    font-size: 2rem;*/
-/*}*/
+div[id*="-meter"].text-primary.text-larger {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.dc-chart g.row text {
+    font-size: 10px;
+}
+
+/*--------- Other Utilities ----------*/

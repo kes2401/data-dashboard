@@ -1,151 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Star Wars Data Dashboard</title>
-    <!-- CSS Stylesheets -->
-    <!-- DC -->
-    <link rel="stylesheet" type="text/css" href="static/css/lib/dc.min.css" />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="static/css/lib/bootstrap.min.css" />
-    <!-- Main Styles -->
-    <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
-</head>
-<body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Star Wars Data Dashboard</title>
+        <!-- CSS Stylesheets -->
+        <!-- DC -->
+        <link rel="stylesheet" type="text/css" href="static/css/lib/dc.min.css" />
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="static/css/lib/bootstrap.min.css" />
+        <!-- Main Styles -->
+        <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+    </head>
+    <body>
+        
+        <!-- PAGE CONTENT -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">           
+            <div class="navbar-header col-md-5">
+                <h1 class="color-gold text-center" id="star-wars-logo">Star Wars</h1>
+                <h4 class="color-gold text-center">The Data Awakens</h4>
+            </div>          
+        </nav>
+        
+        <img id="stormtrooper" src="assets/images/stormtrooper-transparent.png" alt="stormtrooper image">
     
-    <!-- PAGE CONTENT -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">           
-        <div class="navbar-header col-md-5">
-            <h1 class="color-gold text-center" id="star-wars-logo">Star Wars</h1>
-            <h4 class="color-gold text-center">The Data Awakens</h4>
-        </div>          
-    </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 mt-4">
+                    <h1>Star Wars Data Dashboard</h1>    
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, repellat! Quaerat minima suscipit consectetur ut architecto vel exercitationem, assumenda beatae accusantium voluptatum eos, officiis earum itaque asperiores quibusdam enim nulla.</p>
+                </div>
+            </div>
+        </div>
     
-    <img id="stormtrooper" src="assets/images/stormtrooper-transparent.png" alt="stormtrooper image">
+        <div class="container">
+            <div class="row pb-3">
+                <div class="col-4 col-md-2 mt-4 text-center">
+                    <h6>Total Films</h6>
+                    <div id="films-meter" class="text-primary text-larger"></div>
+                </div>
+                <div class="col-4 col-md-2 mt-4 text-center">
+                    <h6>Total People</h6>
+                    <div id="people-meter" class="text-primary text-larger"></div>
+                </div>
+                <div class="col-4 col-md-2 mt-4 text-center">
+                    <h6>Total Planets</h6>
+                    <div id="planets-meter" class="text-primary text-larger"></div>
+                </div>
+                <div class="col-4 col-md-2 mt-4 text-center">
+                    <h6>Total Starships</h6>
+                    <div id="starships-meter" class="text-primary text-larger"></div>
+                </div>
+                <div class="col-4 col-md-2 mt-4 text-center">
+                    <h6>Total Species</h6>
+                    <div id="species-meter" class="text-primary text-larger"></div>
+                </div>
+                <div class="col-4 col-md-2 mt-4 text-center">
+                    <h6>Total Vehicles</h6>
+                    <div id="vehicles-meter" class="text-primary text-larger"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row p-x5">
+                
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Max Atmosphering Speed by Starship</h4>
+                    <p>This is just some sample text</p>
+                    <div id="speed-by-starship-chart"></div>
+                </div>
+                
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Most Film Appearances by Starship</h4>
+                    <p>This is just some sample text</p>
+                    <div id="most-used-starships-chart"></div>
+                </div>
+                
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Largest Planets</h4>
+                    <p>This is just some sample text</p>
+                    <div id="largest-planets-chart"></div>
+                </div>
+                
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Human v Non-Human Characters</h4>
+                    <p>This is just some sample text</p>
+                    <div id="human-non-human-chart"></div>
+                </div>
+                
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Most Film Appearances by Charachter</h4>
+                    <p>This is just some sample text</p>
+                    <div id="most-appearing-characters-chart"></div>
+                </div>
+  
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Wheeled Vehicles v Non-Wheeled Vehicles</h4>
+                    <p>This is just some sample text</p>
+                    <div id="wheeled-non-wheeled-chart"></div>
+                </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 mt-4">
-                <h1>Star Wars Data Dashboard</h1>    
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, repellat! Quaerat minima suscipit consectetur ut architecto vel exercitationem, assumenda beatae accusantium voluptatum eos, officiis earum itaque asperiores quibusdam enim nulla.</p>
+                <div class="col-12 col-lg-6 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Crew Capacity of Vehicles</h4>
+                    <p>This is just some sample text</p>
+                    <div id="crew-capacity-chart"></div>
+                </div>
+ 
+                <div class="col-12 pl-4 pb-3 text-center overflow-auto">
+                    <h4 class="my-4">Tallest Characters</h4>
+                    <p>This is just some sample text</p>
+                    <div id="tallest-characters-chart"></div>
+                </div>
+             
             </div>
         </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6 col-md-4 mt-4 text-center">
-                <h5>Total Films</h5>
-                <div id="films-meter" class="text-primary display-4"></div>
-            </div>
-            <div class="col-6 col-md-4 mt-4 text-center">
-                <h5>Total People</h5>
-                <div id="people-meter" class="text-primary display-4"></div>
-            </div>
-            <div class="col-6 col-md-4 mt-4 text-center">
-                <h5>Total Planets</h5>
-                <div id="planets-meter" class="text-primary display-4"></div>
-            </div>
-            <div class="col-6 col-md-4 mt-4 text-center">
-                <h5>Total Starships</h5>
-                <div id="starships-meter" class="text-primary display-4"></div>
-            </div>
-            <div class="col-6 col-md-4 mt-4 text-center">
-                <h5>Total Species</h5>
-                <div id="species-meter" class="text-primary display-4"></div>
-            </div>
-            <div class="col-6 col-md-4 mt-4 text-center">
-                <h5>Total Vehicles</h5>
-                <div id="vehicles-meter" class="text-primary display-4"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <h4>test pie chart</h4>
-            <div class="col-6" id="pie-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>test bar chart</h4>
-            <div class="col-6" id="bar-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>test row chart</h4>
-            <div class="col-6" id="row-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>test scatter plot</h4>
-            <div class="col-6" id="scatter-plot"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Human v Non-Human chart</h4>
-            <div class="col-6" id="human-non-human-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Largest Planets chart</h4>
-            <div class="col-6" id="largest-planets-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Wheeled Vehicles v Non-Wheeled Vehicles chart</h4>
-            <div class="col-6" id="wheeled-non-wheeled-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Most Used Starships chart</h4>
-            <div class="col-6" id="most-used-starships-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Most Film Appearances by Charachter chart</h4>
-            <div class="col-6" id="most-appearing-characters-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Max Atmosphering Speed by Starship chart</h4>
-            <div class="col-6" id="speed-by-starship-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Tallest Characters chart</h4>
-            <div class="col-6" id="tallest-characters-chart"></div>
-        </div>
-        
-        <div class="row">
-            <h4>Crew Capacity of Vehicles chart</h4>
-            <div class="col-6" id="crew-capacity-chart"></div>
-        </div>
         
         
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-    
-    
-    <!-- JavaScript -->
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- D3 -->
-    <script src="static/js/lib/d3.min.js"></script>
-    <!-- Crossfilter -->
-    <script src="static/js/lib/crossfilter.min.js"></script>
-    <!-- DC -->
-    <script src="static/js/lib/dc.min.js"></script>
-    <!-- Count-Up -->
-    <script src="static/js/lib/countUp.min.js"></script>
-    <!-- Main Script -->
-    <script src="static/js/script.js"></script>
-</body>
+        <!-- JavaScript -->
+        <!-- jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- D3 -->
+        <script src="static/js/lib/d3.min.js"></script>
+        <!-- Crossfilter -->
+        <script src="static/js/lib/crossfilter.min.js"></script>
+        <!-- DC -->
+        <script src="static/js/lib/dc.min.js"></script>
+        <!-- Count-Up -->
+        <script src="static/js/lib/countUp.min.js"></script>
+        <!-- Main Script -->
+        <script src="static/js/script.js"></script>
+    </body>
 </html>
