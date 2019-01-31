@@ -53,8 +53,6 @@ function checkData() {
         totalCount += dataCounts[endPoints[i]];    
     }
     
-    console.log('data checked!'); // for testing
-    
     if (allData.length === totalCount) {
         makeGraphs();        
     }
@@ -62,20 +60,12 @@ function checkData() {
 
 function makeGraphs() {
     console.log('All data has been retrieved!');
-    console.log('All Data:') // for testing
-    console.log(allData); // for testing
-    console.log('Data Counts:') // for testing
-    console.log(dataCounts); // for testing
+
     makeMeters();
     
     const ndx = crossfilter(allData);
-    console.log(ndx);
-    
-    //makePieChart(ndx); // Test chart function
-    //makeBarChart(ndx); // Test chart function
-    //makeRowChart(ndx); // Test chart function
-    
-    
+
+    // function calls to build dashboard charts
     humanNonHumanChart(ndx);
     wheeledNonWheeledChart(ndx);
     largestPlanetsChart(ndx);
@@ -97,75 +87,7 @@ function makeMeters() {
     }
 }
 
-
-function makePieChart(ndx) {
-    let pieChart = dc.pieChart('#pie-chart');
-
-    let nameDim = ndx.dimension(dc.pluck('category'));
-    
-    let nameGroup = nameDim.group();
-
-    pieChart
-        .width(400)
-        .height(400)
-        .slicesCap(6)
-        .innerRadius(100)
-        .dimension(nameDim)
-        .group(nameGroup)
-        .legend(dc.legend())
-        .on('pretransition', function(chart) {
-            chart.selectAll('text.pie-slice').text(function(d) {
-                return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
-            });
-        });
-    
-    pieChart.render();
-
-}
-
-function makeBarChart(ndx) {
-    
-    let barChart = dc.barChart('#bar-chart');
-    
-    let dim = ndx.dimension(dc.pluck('category'));
-    
-    let group = dim.group();
-    
-    barChart
-        .width(400)
-        .height(400)
-        .margins({top: 10, right: 50, bottom: 30, left: 50})
-        .dimension(dim)
-        .group(group)
-        .transitionDuration(500)
-        .x(d3.scaleBand())
-        .xUnits(dc.units.ordinal)
-        .xAxisLabel('Categories')
-        .yAxis().ticks(10);
-    
-    barChart.render()
-}
-
-function makeRowChart(ndx) {
-    // let rowChart = dc.rowChart('#row-chart');
-    
-    // let categoryDim = ndx.dimension(dc.pluck('category'));
-    
-    // let peopleFilter = categoryDim.filter(function(d) {return d.category === 'people'});
-    
-    // let filmGroup = peopleFilter.group(function(d){return d.films});
-    
-    // rowChart
-    //     .width(768)
-    //     .height(450)
-    //     .x(d3.scaleLinear().domain([0, endPoints.length]))
-    //     .dimension(peopleFilter)
-    //     .group(filmGroup)
-    //     .render()
-}
-
 function humanNonHumanChart(ndx) {
-    let humanChart = dc.pieChart('#human-non-human-chart');
     
     let categoryDim = ndx.dimension(function(d) {
         if (d.category === 'people' && d.species[0] === 'https://swapi.co/api/species/1/') {
@@ -192,6 +114,8 @@ function humanNonHumanChart(ndx) {
         };
     }
     
+    let humanChart = dc.pieChart('#human-non-human-chart');
+    
     humanChart
         .height(400)
         .width(400)
@@ -211,8 +135,6 @@ function humanNonHumanChart(ndx) {
 
 function wheeledNonWheeledChart(ndx) {
     
-    let wheeledChart = dc.pieChart('#wheeled-non-wheeled-chart');
-    
     let vehCategoryDim = ndx.dimension(function(d) {
         if (d.category === 'vehicles' && d.vehicle_class === 'wheeled') {
             return 'Wheeled';
@@ -227,8 +149,6 @@ function wheeledNonWheeledChart(ndx) {
     
     let filterVehiclesGroup = removeNonVehicles(vehiclesGroup);
     
-    console.log(filterVehiclesGroup.all()); // for testing
-    
     // function to create fake group
     function removeNonVehicles(source_group) {
         return {
@@ -239,6 +159,8 @@ function wheeledNonWheeledChart(ndx) {
             }
         };
     }
+    
+    let wheeledChart = dc.pieChart('#wheeled-non-wheeled-chart');
     
     wheeledChart
         .height(400)
@@ -258,7 +180,6 @@ function wheeledNonWheeledChart(ndx) {
 }
 
 function largestPlanetsChart(ndx) {
-    let planetsChart = dc.rowChart('#largest-planets-chart');
     
     let nameDim = ndx.dimension(dc.pluck('name'));
     
@@ -266,8 +187,6 @@ function largestPlanetsChart(ndx) {
     
     let filteredGroup = removeNoDiameterSortTopTen(diameterPerPlanet);
     
-    console.log(filteredGroup.all()); // for testing
-
     // function to create fake group
     function removeNoDiameterSortTopTen(source_group) {
         return {
@@ -276,6 +195,8 @@ function largestPlanetsChart(ndx) {
             }
         };
     }
+    
+    let planetsChart = dc.rowChart('#largest-planets-chart');
     
     planetsChart
         .width(740)
@@ -291,7 +212,6 @@ function largestPlanetsChart(ndx) {
 }
 
 function mostUsedStarshipsChart(ndx) {
-    let starshipsChart = dc.rowChart('#most-used-starships-chart');
     
     let nameStarshipsDim = ndx.dimension(dc.pluck('name'));
     
@@ -315,11 +235,7 @@ function mostUsedStarshipsChart(ndx) {
         }
     );
 
-    console.log(filmsPerFact.all()); // for testing
-    
     let filteredStarshipsGroup = removeNonStarshipsSortTopFifteen(filmsPerFact);
-    
-    // console.log(filteredStarshipsGroup.all()); // for testing
 
     // function to create fake group
     function removeNonStarshipsSortTopFifteen(source_group) {
@@ -335,6 +251,8 @@ function mostUsedStarshipsChart(ndx) {
             }
         };
     }
+    
+    let starshipsChart = dc.rowChart('#most-used-starships-chart');
     
     starshipsChart
         .width(720)
@@ -353,14 +271,9 @@ function mostUsedStarshipsChart(ndx) {
     starshipsChart.render();
 }
 
-
 function mostAppearancesByCharachterChart(ndx) {
     
-    let characterAppearancesChart = dc.barChart('#most-appearing-characters-chart');
-    
     let nameCharacterDim = ndx.dimension(dc.pluck('name'));
-    
-    console.log(nameCharacterDim.group().all()); // for testing
     
     let charactersPerFact = nameCharacterDim.group().reduce(
         function(p, v) {
@@ -382,12 +295,8 @@ function mostAppearancesByCharachterChart(ndx) {
         }
     );
 
-    console.log(charactersPerFact.all()); // for testing
-    
     let filteredCharactersGroup = removeNonCharactersSortTopFifteen(charactersPerFact);
     
-    console.log(filteredCharactersGroup.all()); // for testing
-
     // function to create fake group
     function removeNonCharactersSortTopFifteen(source_group) {
         return {
@@ -402,6 +311,8 @@ function mostAppearancesByCharachterChart(ndx) {
             }
         };
     }
+    
+    let characterAppearancesChart = dc.barChart('#most-appearing-characters-chart');
 
     characterAppearancesChart
         .width(720)
@@ -423,11 +334,7 @@ function mostAppearancesByCharachterChart(ndx) {
 
 function speedByStarshipsChart(ndx) {
     
-    let starshipSpeedChart = dc.barChart('#speed-by-starship-chart');
-    
     let nameStarshipDim = ndx.dimension(dc.pluck('name'));
-    
-    console.log(nameStarshipDim.group().all()); // for testing
     
     let starshipsPerFact = nameStarshipDim.group().reduce(
         function(p, v) {
@@ -451,12 +358,8 @@ function speedByStarshipsChart(ndx) {
         }
     );
 
-    console.log(starshipsPerFact.all()); // for testing
-    
     let filteredStarshipsGroup = removeNonStarships(starshipsPerFact);
     
-    console.log(filteredStarshipsGroup.all()); // for testing
-
     // function to create fake group
     function removeNonStarships(source_group) {
         return {
@@ -468,6 +371,8 @@ function speedByStarshipsChart(ndx) {
         };
     }
 
+    let starshipSpeedChart = dc.barChart('#speed-by-starship-chart');
+    
     starshipSpeedChart
         .width(720)
         .height(480)
@@ -489,19 +394,11 @@ function speedByStarshipsChart(ndx) {
 
 function tallestCharactersChart(ndx) {
     
-    let tallestCharactersChart = dc.lineChart('#tallest-characters-chart');
-    
     let charactersDim = ndx.dimension(dc.pluck('name'));
-    
-    console.log(charactersDim); // for testing
     
     let heightPerCharacter = charactersDim.group().reduceSum(dc.pluck('height'));
     
-    console.log(heightPerCharacter.all()); // for testing
-    
     let filteredCharactersGroup = removeNonCharacters(heightPerCharacter);
-    
-    console.log(filteredCharactersGroup.all()); // for testing
 
     // function to create fake group
     function removeNonCharacters(source_group) {
@@ -511,6 +408,8 @@ function tallestCharactersChart(ndx) {
             }
         };
     }
+    
+    let tallestCharactersChart = dc.lineChart('#tallest-characters-chart');
     
     tallestCharactersChart
         .width(1200)
@@ -525,19 +424,12 @@ function tallestCharactersChart(ndx) {
         .group(filteredCharactersGroup);
     
     tallestCharactersChart.render();
-    
 }
 
 
 function crewCapacityChart(ndx) {
     
-    let crewCapacityChart = dc.lineChart('#crew-capacity-chart');
-    
     let crewDim = ndx.dimension(dc.pluck('name'));
-    
-    console.log(crewDim); // for testing
-    
-    
     
     let vehiclesPerFact = crewDim.group().reduce(
         function(p, v) {
@@ -556,17 +448,9 @@ function crewCapacityChart(ndx) {
             return { count: 0, category: '', crew: 0 };
         }
     );
-    
-    
-    
-    // let cargoCapacityPerVehicle = cargoDim.group().reduceSum(dc.pluck('cargo_capacity'));
-    
-    console.log(vehiclesPerFact.all()); // for testing
-    
+
     let filteredVehiclesGroup = removeNonVehicles(vehiclesPerFact);
     
-    console.log(filteredVehiclesGroup.all()); // for testing
-
     // function to create fake group
     function removeNonVehicles(source_group) {
         return {
@@ -575,6 +459,8 @@ function crewCapacityChart(ndx) {
             }
         };
     }
+    
+    let crewCapacityChart = dc.lineChart('#crew-capacity-chart');
     
     crewCapacityChart
         .width(920)
