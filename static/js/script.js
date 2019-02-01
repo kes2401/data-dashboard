@@ -164,8 +164,8 @@ function wheeledNonWheeledChart(ndx) {
     let wheeledChart = dc.pieChart('#wheeled-non-wheeled-chart');
     
     wheeledChart
-        .height(400)
-        .width(400)
+        .height(360)
+        .width(360)
         .innerRadius(80)
         .transitionDuration(500)
         .dimension(vehCategoryDim)
@@ -477,7 +477,8 @@ function crewCapacityChart(ndx) {
             return d.value.crew;
         })
         .dimension(crewDim)
-        .group(filteredVehiclesGroup);
+        .group(filteredVehiclesGroup)
+        .renderDataPoints({radius: 2, fillOpacity: 0.7, strokeOpacity: 0.2});
     
     crewCapacityChart.render();
 }
@@ -520,7 +521,7 @@ function planetPopulationsChart(ndx) {
     let populationChart = dc.pieChart('#planet-population-chart');
     
     populationChart
-        .width(360)
+        .width(520)
         .height(360)
         .innerRadius(0)
         .transitionDuration(500)
