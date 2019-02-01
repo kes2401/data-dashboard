@@ -60,7 +60,7 @@ function checkData() {
 
 function makeGraphs() {
     console.log('All data has been retrieved!');
-
+    console.log(allData); // for testing
     makeMeters();
     
     const ndx = crossfilter(allData);
@@ -74,6 +74,7 @@ function makeGraphs() {
     speedByStarshipsChart(ndx);
     tallestCharactersChart(ndx);
     crewCapacityChart(ndx);
+    planetPopulationsChart(ndx);
 }
 
 function makeMeters() {
@@ -463,7 +464,7 @@ function crewCapacityChart(ndx) {
     let crewCapacityChart = dc.lineChart('#crew-capacity-chart');
     
     crewCapacityChart
-        .width(920)
+        .width(750)
         .height(480)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
@@ -471,7 +472,7 @@ function crewCapacityChart(ndx) {
         .brushOn(false)
         .xyTipsOn(true)
         .xAxisLabel('', 96)
-        .yAxisLabel('', 72)
+        .yAxisLabel('', 32)
         .valueAccessor(function(d) {
             return d.value.crew;
         })
@@ -479,4 +480,56 @@ function crewCapacityChart(ndx) {
         .group(filteredVehiclesGroup);
     
     crewCapacityChart.render();
+}
+
+function planetPopulationsChart(ndx) {
+    
+    let populationNameDim = ndx.dimension(dc.pluck('name'));
+
+    let populationPerPlanet = populationNameDim.group().reduce(
+        function(p, v) {
+            p.count = 1;
+            p.category = v.category;
+            p.diameter = parseInt(v.diameter);
+            p.population = parseInt(v.population);
+            return p;
+        },
+        function(p, v) {
+            p.count = 0;
+            p.category = '';
+            p.diameter = 0;
+            p.population = 0;
+            return p;
+        },  
+        function(p, v) {
+            return { count: 0, category: '', diameter: 0, population: 0 };
+        }
+    );
+    
+    let filteredPopulationGroup = removeNonPlanets(populationPerPlanet);
+
+    // function to create fake group
+    function removeNonPlanets(source_group) {
+        return {
+            all: function (d) {
+                return source_group.all().filter(function(d){return d.value.category === 'planets' && d.value.diameter > 0}).sort((a, b) => (a.value.diameter < b.value.diameter) ? -1 : 1).slice(-10);
+            }
+        };
+    }
+    
+    let populationChart = dc.pieChart('#planet-population-chart');
+    
+    populationChart
+        .width(360)
+        .height(360)
+        .innerRadius(0)
+        .transitionDuration(500)
+        .dimension(populationNameDim)
+        .group(filteredPopulationGroup)
+        .valueAccessor(function(d) {
+            return d.value.population;
+        })
+        .legend(dc.legend());
+        
+    populationChart.render();
 }
