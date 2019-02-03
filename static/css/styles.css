@@ -54,6 +54,18 @@ svg {
     transform: rotate(-45deg);
 }
 
+#reset-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+    right: 500px;
+    left: calc(100% - 60px);
+    z-index: 99;
+    background-color: #fff;
+}
+
 /*---------- Text Utilities ----------*/
 
 div[id*="-meter"].text-primary.text-larger {

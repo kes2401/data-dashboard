@@ -23,40 +23,42 @@
             </div>          
         </nav>
         
+        <a href="javascript:dc.filterAll(); dc.renderAll();" class="text-monospace text-info text-right font-weight-bold" id="reset-btn">Reset All</a>
+
         <img id="stormtrooper" src="assets/images/stormtrooper-transparent.png" alt="stormtrooper image">
     
         <div class="container">
             <div class="row">
-                <div class="col-md-10 mt-4">
+                <div class="col-md-10">
                     <h1>Star Wars Data Dashboard</h1>    
-                    <p>Interactive data dashboard. Total records in the dataset can be found on the counters below once all data has been loaded...</p>
+                    <p class="mb-1">Interactive data dashboard. Total records in the dataset can be found on the counters below once all data has been loaded...</p>
                 </div>
             </div>
         </div>
     
         <div class="container">
-            <div class="row pb-3">
-                <div class="col-4 col-md-2 mt-4 text-center">
+            <div class="row mb-2">
+                <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total Films</h6>
                     <div id="films-meter" class="text-primary text-larger"></div>
                 </div>
-                <div class="col-4 col-md-2 mt-4 text-center">
+                <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total People</h6>
                     <div id="people-meter" class="text-primary text-larger"></div>
                 </div>
-                <div class="col-4 col-md-2 mt-4 text-center">
+                <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total Planets</h6>
                     <div id="planets-meter" class="text-primary text-larger"></div>
                 </div>
-                <div class="col-4 col-md-2 mt-4 text-center">
+                <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total Starships</h6>
                     <div id="starships-meter" class="text-primary text-larger"></div>
                 </div>
-                <div class="col-4 col-md-2 mt-4 text-center">
+                <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total Species</h6>
                     <div id="species-meter" class="text-primary text-larger"></div>
                 </div>
-                <div class="col-4 col-md-2 mt-4 text-center">
+                <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total Vehicles</h6>
                     <div id="vehicles-meter" class="text-primary text-larger"></div>
                 </div>
