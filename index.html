@@ -10,6 +10,8 @@
         <link rel="stylesheet" type="text/css" href="static/css/lib/dc.min.css" />
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="static/css/lib/bootstrap.min.css" />
+        <!-- Intro -->
+        <link rel="stylesheet" type="text/css" href="static/css/lib/introjs.min.css" />
         <!-- Main Styles -->
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
     </head>
@@ -23,21 +25,21 @@
             </div>          
         </nav>
         
-        <a href="javascript:dc.filterAll(); dc.renderAll();" class="text-monospace text-info text-right font-weight-bold" id="reset-btn">Reset All</a>
+        <a href="javascript:dc.filterAll(); dc.renderAll();" class="text-monospace text-info text-right font-weight-bold" id="reset-btn" data-intro="Charts are interactive! When finished viewing a particular selection press this button to reset all charts." data-step="2" data-position="left">Reset All</a>
 
         <img id="stormtrooper" src="assets/images/stormtrooper-transparent.png" alt="stormtrooper image">
     
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    <h1>Star Wars Data Dashboard</h1>    
+                    <h1 data-intro="Welcome! This is a Star Wars data dashboard charting lots of interesting information on this great film series. Click 'Next' to continue the tour to 'Skip' to get straight to the site!." data-step="1" data-position="bottom">Star Wars Data Dashboard</h1>    
                     <p class="mb-1">Interactive data dashboard. Total records in the dataset can be found on the counters below once all data has been loaded...</p>
                 </div>
             </div>
         </div>
     
         <div class="container">
-            <div class="row mb-2">
+            <div class="row mb-2" data-intro="These counters display the total records in each of the categories in the dataset." data-step="3" data-position="bottom">
                 <div class="col-4 col-md-2 mt-2 text-center">
                     <h6>Total Films</h6>
                     <div id="films-meter" class="text-primary text-larger"></div>
@@ -72,7 +74,7 @@
                     <h4 class="my-4">Max Atmosphering Speed by Starship</h4>
                     <p>Max Atmosphering Speed of startships by <em>kilometers per hour</em></p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="speed-by-starship-chart"></div>
+                        <div id="speed-by-starship-chart" data-intro="This bar chart compares the speed of all starships in the dataset where the speed details are known." data-step="4" data-position="right"></div>
                     </div>
                 </div>
                 
@@ -80,7 +82,7 @@
                     <h4 class="my-4">Most Film Appearances by Starship</h4>
                     <p>Top 15 startships with the most film appearances charted by <em>films appeared in</em></p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="most-used-starships-chart"></div>
+                        <div id="most-used-starships-chart" data-intro="This row chart compares the starships that appeared in the most films." data-step="5" data-position="left"></div>
                     </div>
                 </div>
                 
@@ -88,7 +90,7 @@
                     <h4 class="my-4">Largest Planets</h4>
                     <p>Top 10 largest planets measured by <em>diameter in kilometers</em></p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="largest-planets-chart"></div>
+                        <div id="largest-planets-chart" data-intro="These are the fifteen largest planets charted by diameter in kilometers." data-step="6" data-position="right"></div>
                     </div>
                 </div>
                 
@@ -96,7 +98,7 @@
                     <h4 class="my-4">Population of Planets</h4>
                     <p>Population distribution across the top 10 largest planets</p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="planet-population-chart"></div>
+                        <div id="planet-population-chart" data-intro="This pie chart shows the population distrution across those largest planets." data-step="7" data-position="left"></div>
                     </div>
                 </div>
                 
@@ -104,7 +106,7 @@
                     <h4 class="my-4">Wheeled Vehicles v Non-Wheeled Vehicles</h4>
                     <p>Total vehicles used split by wheeled and non-wheeled vehicles</p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="wheeled-non-wheeled-chart"></div>
+                        <div id="wheeled-non-wheeled-chart" data-intro="This chart compares wheeled vehicle against non-wheeled vehicles." data-step="8" data-position="right"></div>
                     </div>
                 </div>
 
@@ -112,7 +114,7 @@
                     <h4 class="my-4">Crew Capacity of Vehicles</h4>
                     <p>Number of crew capable of travelling in each vehicle</p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="crew-capacity-chart"></div>
+                        <div id="crew-capacity-chart" data-intro="This line chart compares the crew capacity of all vehicles." data-step="9" data-position="left"></div>
                     </div>
                 </div>
                 
@@ -120,7 +122,7 @@
                     <h4 class="my-4">Human v Non-Human Characters</h4>
                     <p>Total characters split by human and non-wheeled characters</p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="human-non-human-chart"></div>
+                        <div id="human-non-human-chart" data-intro="This chart compares the number of human characters against non-human characters." data-step="10" data-position="right"></div>
                     </div>
                 </div>
                 
@@ -128,7 +130,7 @@
                     <h4 class="my-4">Most Film Appearances by Charachter</h4>
                     <p>Most film appearances from each character charted by <em>films appeared in</em></p>
                     <div class="d-flex justify-content-md-center">
-                        <div id="most-appearing-characters-chart"></div>
+                        <div id="most-appearing-characters-chart" data-intro="This chart shows the fifteen most appearing characters and the number of films they appeared in." data-step="11" data-position="left"></div>
                     </div>
                 </div>
 
@@ -136,7 +138,7 @@
                     <h4 class="my-4">Tallest Characters</h4>
                     <p>Heigth of all characters in <em>centimeters</em></p>
                     <div class="d-flex justify-content-xl-center">
-                        <div id="tallest-characters-chart"></div>
+                        <div id="tallest-characters-chart" data-intro="This chart compares the height of all characters where height details are known." data-step="12" data-position="bottom"></div>
                     </div>
                 </div>
              
@@ -158,6 +160,8 @@
         <script src="static/js/lib/dc.min.js"></script>
         <!-- Count-Up -->
         <script src="static/js/lib/countUp.min.js"></script>
+        <!-- Intro -->
+        <script src="static/js/lib/intro.min.js"></script>
         <!-- Main Script -->
         <script src="static/js/script.js"></script>
     </body>

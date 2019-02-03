@@ -89,6 +89,10 @@ function makeGraphs() {
     tallestCharactersChart(ndx);
     crewCapacityChart(ndx);
     planetPopulationsChart(ndx);
+    
+    setTimeout(function(){
+        introJs().start();    
+    }, 2000);
 }
 
 function makeMeters() {
@@ -547,4 +551,16 @@ function planetPopulationsChart(ndx) {
         .legend(dc.legend());
         
     populationChart.render();
+}
+
+/*
+This removes IntroJS tooltips from the actual charts on small screens which
+would otherwise impact negatively on UX due to positioning of tooltips.
+*/
+if (window.innerWidth < 768) {
+    chartNodes.each(function(){
+        $(this).removeAttr('data-intro');  
+        $(this).removeAttr('data-step');  
+        $(this).removeAttr('data-position');  
+    });
 }
