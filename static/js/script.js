@@ -14,6 +14,16 @@ for (let i = 0; i < endPoints.length; i++) {
     );
 }
 
+let chartNodes = $('div[id*="-chart"]');
+
+chartNodes.each(function(){
+    $(this).html(
+        `<div class="loader">
+            <img src="assets/loader/loader.gif" alt="loading..."/>
+        </div>`
+    );   
+});
+
 function getData(url, endpoint, linked = false) {
     if (linked) {
         $.getJSON(url, function(data) {
@@ -60,7 +70,11 @@ function checkData() {
 
 function makeGraphs() {
     console.log('All data has been retrieved!');
-    console.log(allData); // for testing
+    
+    chartNodes.each(function(){
+        $(this).html('');   
+    });
+    
     makeMeters();
     
     const ndx = crossfilter(allData);
