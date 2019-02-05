@@ -2,11 +2,13 @@ const endPoints = ['films', 'people', 'planets', 'starships', 'species', 'vehicl
 
 const apiURL = 'https://swapi.co/api/';
 
-let allData = [];
-let dataCounts = {};
+let allData = []; // array that will hold all data retrieve from the Swapi API
+let dataCounts = {}; // an object that will hold the total number of records available at each Swapi API endpoint once the first async requests are made
 
 for (let i = 0; i < endPoints.length; i++) {
+    // call recursive function to retrieve data from the Swapi API
     getData(apiURL, endPoints[i]);
+    // display loaders in all containers for number counters
     $(`#${endPoints[i]}-meter`).html(
         `<div class="loader">
             <img src="assets/loader/loader.gif" alt="loading..."/>
@@ -14,8 +16,8 @@ for (let i = 0; i < endPoints.length; i++) {
     );
 }
 
-let chartNodes = $('div[id*="-chart"]');
-
+const chartNodes = $('div[id*="-chart"]');
+// display loaders in all chart containers
 chartNodes.each(function(){
     $(this).html(
         `<div class="loader">
@@ -24,6 +26,17 @@ chartNodes.each(function(){
     );   
 });
 
+// A recursive function that will call the jQuery getJSON() method to make the
+// async request for data and add all returned records to the allData array.
+// Also updates dataCounts object with the total number of records available at
+// each endpoint.
+// Only 10 records are returned from any endpoint on a single request. This
+// function will check if there is a next value in the form of the URL and if
+// there is the function will call itself again with that URL and again push
+// all records returned into the allData array.
+// After all pages have been requested at each endpoint the function calls the 
+// checkData() function which will checks if total records retrieved match the
+// the total number of records available across all endpoints.
 function getData(url, endpoint, linked = false) {
     if (linked) {
         $.getJSON(url, function(data) {
@@ -56,6 +69,10 @@ function getData(url, endpoint, linked = false) {
     }
 }
 
+// This function checks the total number of records that are contained in the
+// Swapi API against the total number of records that have been retrieved so far
+// and if they are equal the the application will call the makeGraphs() 
+// function to begin building the charts.
 function checkData() {
     let totalCount = 0;
     
@@ -92,9 +109,10 @@ function makeGraphs() {
     
     setTimeout(function(){
         introJs().start();    
-    }, 2000);
+    }, 2000); // just to provide a few moments for charts and counters to finish animating etc before introductory site tour starts
 }
 
+// instantiates and animates counters that will hold the total number of records in each category
 function makeMeters() {
     for (let i = 0; i < endPoints.length; i++) {
         let number = new CountUp(`${endPoints[i]}-meter`, 0, dataCounts[endPoints[i]]);
@@ -106,8 +124,10 @@ function makeMeters() {
     }
 }
 
+// ---------- All code below is made up of functions that build the charts ----------
+
 function humanNonHumanChart(ndx) {
-    
+    // new dimension that checks records for humans, non-human, and non-people
     let categoryDim = ndx.dimension(function(d) {
         if (d.category === 'people' && d.species[0] === 'https://swapi.co/api/species/1/') {
             return 'Human';
@@ -122,7 +142,7 @@ function humanNonHumanChart(ndx) {
     
     let filteredGroup = removeNonPeople(peopleGroup);
     
-    // function to create fake group
+    // function to create fake group that has all non-people filtered out
     function removeNonPeople(source_group) {
         return {
             all:function () {
@@ -153,7 +173,7 @@ function humanNonHumanChart(ndx) {
 }
 
 function wheeledNonWheeledChart(ndx) {
-    
+    // new dimension that checks records for wheeled vehicles, non-wheeled vehicles, and non-vehicles
     let vehCategoryDim = ndx.dimension(function(d) {
         if (d.category === 'vehicles' && d.vehicle_class === 'wheeled') {
             return 'Wheeled';
@@ -168,7 +188,7 @@ function wheeledNonWheeledChart(ndx) {
     
     let filterVehiclesGroup = removeNonVehicles(vehiclesGroup);
     
-    // function to create fake group
+    // function to create fake group that filters out non-vehicles
     function removeNonVehicles(source_group) {
         return {
             all:function () {
@@ -206,7 +226,7 @@ function largestPlanetsChart(ndx) {
     
     let filteredGroup = removeNoDiameterSortTopTen(diameterPerPlanet);
     
-    // function to create fake group
+    // function to create fake group to filter out records with diameters of zero or and sort to retrieve the top 10 records by diameter
     function removeNoDiameterSortTopTen(source_group) {
         return {
             all: function (d) {
@@ -256,7 +276,7 @@ function mostUsedStarshipsChart(ndx) {
 
     let filteredStarshipsGroup = removeNonStarshipsSortTopFifteen(filmsPerFact);
 
-    // function to create fake group
+    // function to create fake group which will filter out all non-starships then sort and return top 15 with most film appearances
     function removeNonStarshipsSortTopFifteen(source_group) {
         return {
             all: function (d) {
@@ -316,7 +336,7 @@ function mostAppearancesByCharachterChart(ndx) {
 
     let filteredCharactersGroup = removeNonCharactersSortTopFifteen(charactersPerFact);
     
-    // function to create fake group
+    // function to create fake group which will filter out all non-people and then sort and return top 15 with most film appearances
     function removeNonCharactersSortTopFifteen(source_group) {
         return {
             all: function (d) {
@@ -379,7 +399,7 @@ function speedByStarshipsChart(ndx) {
 
     let filteredStarshipsGroup = removeNonStarships(starshipsPerFact);
     
-    // function to create fake group
+    // function to create fake group that will filter out all non-starships
     function removeNonStarships(source_group) {
         return {
             all: function (d) {
@@ -419,7 +439,7 @@ function tallestCharactersChart(ndx) {
     
     let filteredCharactersGroup = removeNonCharacters(heightPerCharacter);
 
-    // function to create fake group
+    // function to create fake group filter out all non-characteters that did not have a height value
     function removeNonCharacters(source_group) {
         return {
             all: function (d) {
@@ -470,7 +490,7 @@ function crewCapacityChart(ndx) {
 
     let filteredVehiclesGroup = removeNonVehicles(vehiclesPerFact);
     
-    // function to create fake group
+    // function to create fake group that filters out all non-vehicles and any records with non numeric values
     function removeNonVehicles(source_group) {
         return {
             all: function (d) {
@@ -527,7 +547,7 @@ function planetPopulationsChart(ndx) {
     
     let filteredPopulationGroup = removeNonPlanets(populationPerPlanet);
 
-    // function to create fake group
+    // function to create fake group that had filtered out all non-planets and those with a diameter value of zero, then sorts and returns the top 10 records
     function removeNonPlanets(source_group) {
         return {
             all: function (d) {
@@ -551,16 +571,4 @@ function planetPopulationsChart(ndx) {
         .legend(dc.legend());
         
     populationChart.render();
-}
-
-/*
-This removes IntroJS tooltips from the actual charts on small screens which
-would otherwise impact negatively on UX due to positioning of tooltips.
-*/
-if (window.innerWidth < 768) {
-    chartNodes.each(function(){
-        $(this).removeAttr('data-intro');  
-        $(this).removeAttr('data-step');  
-        $(this).removeAttr('data-position');  
-    });
 }
