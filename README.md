@@ -2,7 +2,7 @@
 
 A data dashboard that visualizes a dataset retrieved from the [Star Wars API](https://swapi.co/). 
 
-Built for Milestone Project no.2 in the Full Stack Software Development bootcamp at Code Institute, in the Intereactive Frontend Development lesson.
+Built for Milestone Project no.2 in the Full Stack Software Development bootcamp at Code Institute, in the Interactive Frontend Development module.
  
 ## UX
  
@@ -26,7 +26,7 @@ This site was based on an initial mockup designed in Adobe XD and an exported im
 
 ## Features
  
-### Existing Features
+#### Existing Features
 - Feature 1 - 
 - Feature 2 - 
 - Feature 3 - 
@@ -40,42 +40,56 @@ Languages, frameworks, libraries, and any other tools used to construct this pro
 - HTML 5
     - This project uses **HTML** to structure the content of the website.
 - CSS 3
-    - The project uses **CSS** to add styling and to adjust the default styling of components provided by the Bootstrap framework. It was also used to add media queries to assist in the responsive behaviour of the site.
+    - The project uses **CSS** to add fonts and some additional styling to the site.
 - [Bootstrap](https://getbootstrap.com/)
     - This project uses **Bootstrap** to assist with responsive behaviour and to provide a grid framework.
-- JavaScript
-    - The project uses **JavaScript** to add some interactive behaviour, particularly while using the jQuery library.
-- [jQuery](https://jquery.com/)
-    - This project uses **jQuery** to provide some minor interactive features such as page scrolling and form submission modal handling
 - [Bootswatch](https://bootswatch.com/)
-    - Lux theme for **Bootstrap** 
+    - **Bootswatch** was used to provide a theme for Bootstrap. The 'Lux' theme was used for this site. 
+- JavaScript
+    - The project uses **JavaScript** to add animations, retrieve data from the third-party API and to build the charts displayed on the dashboard.
+- [jQuery](https://jquery.com/)
+    - This project uses **jQuery** to assist in making asynchronous requests for third-party data and also to simplify DOM manipulation.
 - [D3.js](https://d3js.org/)
-    - A JacaSvript library used for visualizing data.
+    - The project uses **D3.js** to for data visualization.
 - [DC.js](https://dc-js.github.io/dc.js/)
-    - A charting library build on top of D3.js to build reactive charts that provide instant feedback to user interaction
+    - The JavaScript library **DC.js** was used on top of D3.js to build reactive charts that provide instant feedback to user interaction.
 - [Crossfilter](http://square.github.io/crossfilter/)
-    - A JavaScript library used to explore multidimensional datasets
+    - The **Crossfilter** JavaScript library was used to work with a multidimensional dataset and to support chart interaction.
 - [CountUp.js](https://inorganik.github.io/countUp.js/)
-    - A simple JavaScript library used to create number animations
+    - This simple **CountUp.js** JavaScript library was used to create number animations.
 - [Intro.js](https://introjs.com/)
-    - Used to provide an introduction to user with a tour of the features of the site 
-
+    - **Intro.js** was used to provide an introduction to the user and a tour of the features of the site.
 
 ## Testing
 
-This project was developed incrementally with continuous checking to ensure all changes to source code were providing the desired outcome. The site was build using Google Chrome browser (version 71) for this purpose, then later tested in other browsers.
+This project was developed incrementally with continuous use of `console.log` to repeatedly check the changes made on the site and to ensure all changes to source code were providing the desired outcome in the browser. The site was build using Google Chrome browser (version 71) and then later tested in other browsers.
 
 This project was tested for responsiveness using the Chrome Developer Tools mobile device simulator. It was also viewed on physical Samsung Galaxy A5 (2017) mobile device to ensure good responsive behaviour. The site was also tested in Mozilla Firefox (version 65) and Microsoft Edge (version 17) browsers to ensure appearance and functionality of the site was as expected across all 3 of these browsers.
 
 HTML markup and CSS styles were checked using the W3C Validation Tool [here](http://validator.w3.org) and both HTML and CSS files passed without error.
 
-The site was audited with Chrome Dev Tools' Lighthouse. Using the Applied Fast 3G throttling, the results were as follows on the first audit report:
+There is no actual user input on the site so there was no form elements and no user input validation required.
 
-| Performance | Progressive Web App | Accessibility | Best Practices | SEO |
-| :---------: |:-------------------:| :------------:|:--------------:|:---:|
-| 86          | 50                  | 88            | 87             | 89  |
+All users stories defined at the outset were checked and all were correctly displayed at all times as well as being reactive to user interaction and with each chart being interactive with all related charts.
 
-While ...
+*There is one particular error showing in the console when the user interacts with some of the charts, which displays the error:
+`Error: <g> attribute transform: Expected number, "translate(NaN,0)".`
+This error has not yet been resolved and while it doesn't really appear to have a negative impact on the visualizations on the dashboard I am currently working to debug this error.
+There are no other errors being displayed in the Chrome Dev Tools console when the site loads and when users interact with it.
+
+The site was also audited with Chrome Dev Tools' Lighthouse. Using the Applied Fast 3G throttling, the results were good and were as follows on the audit report:
+
+| Performance | Accessibility | Best Practices | SEO |
+| :---------: | :------------:|:--------------:|:---:|
+| 86          | 88            | 87             | 89  |
+
+(_Progressive Web App audit scoring has been removed as the site was not intended to operate as a PWA_.)
+
+#### Unit Testing
+
+All the JavaScript code written to date does not explicitly return any values as such and simply completes operations such as pushing data to a global array, adding properties to a global object, incrementing global variables or calling functions to build charts on the dashboard.
+
+*Some testing will need to be added for the asynchronous requests with proper error handling added where the application has for some reason been unable to retrieve the data from the third-party API. 
 
 ## Deployment
 
@@ -87,8 +101,12 @@ The live project can be viewed [here](https://kes2401.github.io/data-dashboard/)
 
 ## Credits
 
-### Content
+#### Acknowledgements
 
-### Media
-
-### Acknowledgements
+- The Star Wars font used in the main heading is called 'Star Jedi' and was downloaded from [here](https://www.dafont.com/star-jedi.font).
+- The code used to run CountUp.js on the record counters was taken from the brief demo on the [CountUp.js website](https://inorganik.github.io/countUp.js/) and then amended slightly for the purposes of this project.
+- In researching how to properly understand and implement the functionality and features provided by DC.js and Crossfilter.js the following sites and pages were regularly referenced:
+    - [Examples of using dc.js](http://dc-js.github.io/dc.js/examples/) on the DC.js site
+    - [DC.js Tutorial](https://www.tutorialspoint.com/dcjs/) on TutorialsPoint
+    - [Getting to know Crossfilter](https://animateddata.co.uk/articles/crossfilter/) article by Peter Cook
+    - [Crossfilter Tutorial](http://blog.rusty.io/2012/09/17/crossfilter-tutorial/) by Rusty Klophaus
