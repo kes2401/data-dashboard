@@ -63,6 +63,7 @@ Languages, frameworks, libraries, and any other tools used to construct this pro
 This project was developed incrementally with continuous use of `console.log` to repeatedly check the changes made on the site and to ensure all changes to source code were providing the desired outcome in the browser. The site was build using Google Chrome browser (version 71) and then later tested in other browsers.
 
 This project was tested for responsiveness using the Chrome Developer Tools mobile device simulator. It was also viewed on physical Samsung Galaxy A5 (2017) mobile device to ensure good responsive behaviour. The site was also tested in Mozilla Firefox (version 65) and Microsoft Edge (version 17) browsers to ensure appearance and functionality of the site was as expected across all 3 of these browsers.
+As this project is a data dashboard it designed for desktop or large-screen viewing, however the containers in which the charts are rendered are responsive and scrollbars have been added to allow the charts be viewed as much as possible on smaller screens where possible.
 
 HTML markup and CSS styles were checked using the W3C Validation Tool [here](http://validator.w3.org) and both HTML and CSS files passed without error.
 
@@ -85,6 +86,7 @@ The site was also audited with Chrome Dev Tools' Lighthouse. Using the Applied F
 
 All the JavaScript code written to date does not explicitly return any values as such and simply completes operations such as pushing data to a global array, adding properties to a global object, incrementing global variables or calling functions to build charts on the dashboard. 
 The two main functions defined were `getData()` and `makeGraphs()` and tests were run to ensure the `getData()` function calls jQuery's `getJSON()` method which is used internally, and also to ensure the `makeGraphs()` function calls all of the relevant functions to create all charts for the dashboard.
+Results of these test using Jasmine can be seen on the image below (test files can also be found inside the 'jasmine' folder in the project repo):
 
 ![test results](jasmine/testing1.jpg)
 
