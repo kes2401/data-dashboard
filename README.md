@@ -27,11 +27,9 @@ This site was based on an initial mockup designed in Adobe XD and an exported im
 ## Features
  
 #### Existing Features
-- Feature 1 - 
-- Feature 2 - 
-- Feature 3 - 
-- Feature 4 - 
-- Feature 5 - 
+- Feature 1 - View numerous Pie Charts, Line Graphs, Bar Charts and Row Charts that visualize various aspects of a detailed Star Wars dataset.
+- Feature 2 - Click on elements to interact with the charts. 
+- Feature 3 - Reset all charts when necessary.
 
 ## Technologies Used
 
@@ -85,11 +83,10 @@ The site was also audited with Chrome Dev Tools' Lighthouse. Using the Applied F
 
 (_Progressive Web App audit scoring has been removed as the site was not intended to operate as a PWA_.)
 
-#### Unit Testing
+All the JavaScript code written to date does not explicitly return any values as such and simply completes operations such as pushing data to a global array, adding properties to a global object, incrementing global variables or calling functions to build charts on the dashboard. 
+The two main functions defined were `getData()` and `makeGraphs()` and tests were run to ensure the `getData()` function calls jQuery's `getJSON()` method which is used internally, and also to ensure the `makeGraphs()` function calls all of the relevant functions to create all charts for the dashboard.
 
-All the JavaScript code written to date does not explicitly return any values as such and simply completes operations such as pushing data to a global array, adding properties to a global object, incrementing global variables or calling functions to build charts on the dashboard.
-
-*Some testing will need to be added for the asynchronous requests with proper error handling added where the application has for some reason been unable to retrieve the data from the third-party API. 
+![test results](jasmine/testing1.jpg)
 
 ## Deployment
 
