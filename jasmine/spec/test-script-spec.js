@@ -1,9 +1,32 @@
 describe('getData function', function() {
+    
+    const url = 'https://swapi.co/api/';
+    const endpoints = ['films', 'people', 'planets', 'starships', 'species', 'vehicles'];
+    const endpoint = 'people';
+    let allData = [];
+    
+    it('API URL should be defined', function() {
+        // arrange
+        
+        // act
+        getData(url, endpoint, false);
+        
+        // assert
+        expect(url).toBeDefined();   
+    });
+    
+    it('API URL should be a string', function() {
+        // arrange
+        
+        // act
+        getData(url, endpoint, false);
+        
+        // assert
+        expect(typeof(url)).toBe('string');   
+    });
 
     it('Should call getJSON jQuery method', function() {
         // arrange
-        const url = 'https://swapi.co/api/';
-        const endpoint = 'people';
         spyOn(jQuery, 'getJSON');
         
         // act
@@ -11,7 +34,38 @@ describe('getData function', function() {
         
         // assert
         expect(jQuery.getJSON).toHaveBeenCalled();   
-    })
+    });
+    
+    it('endpoint should be a string', function() {
+        // arrange
+        
+        // act
+        getData(url, endpoint, false);
+        
+        // assert
+        expect(typeof(endpoint)).toBe('string');   
+    });
+
+    
+    it('allData variable should be defined', function() {
+        // arrange
+        
+        // act
+        getData(url, endpoint, false);
+        
+        // assert
+        expect(allData).toBeDefined();   
+    });
+    
+    it('allData variable should contain an array', function() {
+        // arrange
+        
+        // act
+        getData(url, endpoint, false);
+        
+        // assert
+        expect(Array.isArray(allData)).toBe(true);   
+    });
 });
 
 describe('makeGraphs function', function() {

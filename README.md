@@ -86,6 +86,7 @@ The site was also audited with Chrome Dev Tools' Lighthouse. Using the Applied F
 
 All the JavaScript code written to date does not explicitly return any values as such and simply completes operations such as pushing data to a global array, adding properties to a global object, incrementing global variables or calling functions to build charts on the dashboard. 
 The two main functions defined were `getData()` and `makeGraphs()` and tests were run to ensure the `getData()` function calls jQuery's `getJSON()` method which is used internally, and also to ensure the `makeGraphs()` function calls all of the relevant functions to create all charts for the dashboard.
+Tests were also run to ensure that the arguments passed in to the `getData()` function were of type `string` and that variable that is declared to hold all data returned by the is of type `array`.
 Results of these test using Jasmine can be seen on the image below (test files can also be found inside the 'jasmine' folder in the project repo):
 
 ![test results](jasmine/testing1.jpg)

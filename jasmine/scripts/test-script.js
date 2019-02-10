@@ -97,7 +97,7 @@ function makeGraphs() {
     const ndx = crossfilter(allData);
 
     // function calls to build dashboard charts
-    let newChart = humanNonHumanChart(ndx);
+    humanNonHumanChart(ndx);
     wheeledNonWheeledChart(ndx);
     largestPlanetsChart(ndx);
     mostUsedStarshipsChart(ndx);
