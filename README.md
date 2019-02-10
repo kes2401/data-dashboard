@@ -89,7 +89,7 @@ The two main functions defined were `getData()` and `makeGraphs()` and tests wer
 Tests were also run to ensure that the arguments passed in to the `getData()` function were of type `string` and that variable that is declared to hold all data returned by the is of type `array`.
 Results of these test using Jasmine can be seen on the image below (test files can also be found inside the 'jasmine' folder in the project repo):
 
-![test results](jasmine/testing1.jpg)
+![test results](jasmine/testing2.jpg)
 
 ## Deployment
 
