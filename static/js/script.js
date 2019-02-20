@@ -46,7 +46,7 @@ function getData(url, endpoint, linked = false) {
             }
             
             if (data.next) {
-                getData(data.next, endpoint, true);
+                getData(data.next, endpoint, true); 
             } else {
                 checkData();
             }
@@ -246,6 +246,8 @@ function largestPlanetsChart(ndx) {
         .dimension(nameDim)
         .group(filteredGroup)
         .labelOffsetX(5);
+        
+    planetsChart.margins().left = 60;
     
     planetsChart.render();
 }
@@ -428,6 +430,8 @@ function speedByStarshipsChart(ndx) {
         .xAxisPadding(100)
         .yAxis().ticks(12);
     
+    starshipSpeedChart.margins().left = 100;
+    
     starshipSpeedChart.render()
 }
 
@@ -461,6 +465,8 @@ function tallestCharactersChart(ndx) {
         .xAxisLabel('', 86)
         .dimension(charactersDim)
         .group(filteredCharactersGroup);
+        
+    tallestCharactersChart.margins().left = 40;
     
     tallestCharactersChart.render();
 }
@@ -517,6 +523,8 @@ function crewCapacityChart(ndx) {
         .dimension(crewDim)
         .group(filteredVehiclesGroup)
         .renderDataPoints({radius: 2, fillOpacity: 0.7, strokeOpacity: 0.2});
+    
+    crewCapacityChart.margins().left = 120;
     
     crewCapacityChart.render();
 }
