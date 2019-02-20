@@ -94,18 +94,21 @@ function makeGraphs() {
     
     makeMeters();
     
-    const ndx = crossfilter(allData);
+    const ndxPeople = crossfilter(allData);
+    const ndxStarships = crossfilter(allData);
+    const ndxVehicles = crossfilter(allData);
+    const ndxPlanets = crossfilter(allData);
 
     // function calls to build dashboard charts
-    humanNonHumanChart(ndx);
-    wheeledNonWheeledChart(ndx);
-    largestPlanetsChart(ndx);
-    mostUsedStarshipsChart(ndx);
-    mostAppearancesByCharachterChart(ndx);
-    speedByStarshipsChart(ndx);
-    tallestCharactersChart(ndx);
-    crewCapacityChart(ndx);
-    planetPopulationsChart(ndx);
+    humanNonHumanChart(ndxPeople);
+    wheeledNonWheeledChart(ndxVehicles);
+    largestPlanetsChart(ndxPlanets);
+    mostUsedStarshipsChart(ndxStarships);
+    mostAppearancesByCharachterChart(ndxPeople);
+    speedByStarshipsChart(ndxStarships);
+    tallestCharactersChart(ndxPeople);
+    crewCapacityChart(ndxVehicles);
+    planetPopulationsChart(ndxPlanets);
     
     setTimeout(function(){
         introJs().start();    
