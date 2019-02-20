@@ -71,10 +71,7 @@ There is no actual user input on the site so there was no form elements and no u
 
 All users stories defined at the outset were checked and all were correctly displayed at all times as well as being reactive to user interaction and with each chart being interactive with all related charts.
 
-*There is one particular error showing in the console when the user interacts with some of the charts, which displays the error:
-`Error: <g> attribute transform: Expected number, "translate(NaN,0)".`
-This error has not yet been resolved and while it doesn't really appear to have a negative impact on the visualizations on the dashboard I am currently working to debug this error.
-There are no other errors being displayed in the Chrome Dev Tools console when the site loads and when users interact with it.
+There are no errors being displayed in the Chrome Dev Tools console when the site loads and when users interacts with the dashboard.
 
 The site was also audited with Chrome Dev Tools' Lighthouse. Using the Applied Fast 3G throttling, the results were good and were as follows on the audit report:
 
