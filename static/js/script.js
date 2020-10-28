@@ -1,6 +1,6 @@
 const endPoints = ['films', 'people', 'planets', 'starships', 'species', 'vehicles'];
 
-const apiURL = 'https://swapi.co/api/';
+const apiURL = 'https://swapi.dev/api/';
 
 let allData = []; // array that will hold all data retrieve from the Swapi API
 let dataCounts = {}; // an object that will hold the total number of records available at each Swapi API endpoint once the first async requests are made
